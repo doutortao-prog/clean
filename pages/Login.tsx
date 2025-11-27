@@ -24,7 +24,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
       if (user) {
         onSuccess();
       } else {
-        setError('Credenciais inválidas. Verifique usuário e senha.');
+        setError('Credenciais inválidas. Tente usuário "user" e senha "user123".');
       }
       setLoading(false);
     }, 800);
@@ -34,7 +34,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-4">
-            <div className="h-12 w-12 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+            <div className="h-12 w-12 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg">
                 CM
             </div>
         </div>
@@ -42,12 +42,12 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
           CleanMaster AI
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Entre para acessar os catálogos
+          Entre para acessar os catálogos técnicos
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div className="bg-white py-8 px-4 shadow-xl sm:rounded-lg sm:px-10 border border-gray-100">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <Input
               label="E-mail ou Usuário"
@@ -55,7 +55,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Ex: user ou nome@empresa.com"
+              placeholder="Digite 'user' ou seu e-mail"
             />
 
             <Input
@@ -67,7 +67,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
             />
 
             {error && (
-              <div className="text-red-600 text-sm bg-red-50 p-2 rounded">
+              <div className="text-red-600 text-sm bg-red-50 p-2 rounded border border-red-100">
                 {error}
               </div>
             )}

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Product } from '../types';
 import { EL_CASTOR_PRODUCTS } from './catalogData';
 
 export const ElCastorCatalog: React.FC = () => {
@@ -7,60 +6,95 @@ export const ElCastorCatalog: React.FC = () => {
 
   const filteredProducts = EL_CASTOR_PRODUCTS.filter(p => 
     p.name.toLowerCase().includes(filter.toLowerCase()) || 
-    p.category.toLowerCase().includes(filter.toLowerCase())
+    p.category.toLowerCase().includes(filter.toLowerCase()) ||
+    (p.specs && p.specs.toLowerCase().includes(filter.toLowerCase()))
   );
 
   return (
     <div className="space-y-6">
-      <div className="bg-elcastor-red text-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-2xl font-bold mb-1">Catálogo El Castor</h2>
-        <p className="text-sm opacity-90">Especificações técnicas e Códigos APPCC.</p>
+      {/* Header Info */}
+      <div className="bg-elcastor-red text-white p-6 rounded-xl shadow-sm">
+        <h2 className="text-2xl font-bold mb-1">Catálogo Técnico El Castor</h2>
+        <p className="text-sm opacity-90">Lista oficial de ferramentas com especificações de material e resistência.</p>
         
-        <div className="mt-4">
-          <input 
-            type="text" 
-            placeholder="Filtrar especificações..." 
-            className="w-full max-w-md px-3 py-2 text-sm rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-white bg-white/90 placeholder-gray-500"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          />
+        <div className="mt-4 relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input 
+                type="text" 
+                placeholder="Buscar por nome, código ou material (ex: PBT, 120°C)..." 
+                className="w-full pl-10 px-4 py-3 text-sm rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white/50 bg-white placeholder-gray-500 shadow-sm"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+            />
         </div>
       </div>
 
+      {/* Technical List */}
       <div className="grid grid-cols-1 gap-4">
         {filteredProducts.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg border border-gray-200 p-5 hover:border-elcastor-red transition-colors shadow-sm flex flex-col sm:flex-row sm:items-start gap-4">
+          <div key={product.id} className="bg-white rounded-xl border border-gray-200 p-6 hover:border-elcastor-red transition-all shadow-sm hover:shadow-md">
             
-            <div className="flex-1">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
                 <div>
-                    <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-bold text-elcastor-dark uppercase bg-red-50 px-2 py-0.5 rounded border border-red-100">{product.category}</span>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="text-xs font-bold text-elcastor-dark uppercase bg-red-50 px-2 py-0.5 rounded border border-red-100 tracking-wide">
+                            {product.category}
+                        </span>
+                        {product.specs?.includes("PBT") && (
+                            <span className="text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                                Indústria Alimentícia
+                            </span>
+                        )}
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900">{product.name}</h3>
+                    <h3 className="text-lg font-bold text-gray-900 leading-snug">{product.name}</h3>
                 </div>
-                <div className="text-xs font-mono text-gray-400 mt-1 sm:mt-0 bg-gray-50 px-2 py-1 rounded">
-                    REF: {product.id}
+                <div className="mt-2 sm:mt-0 flex-shrink-0">
+                    <span className="font-mono text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">
+                        REF: {product.id}
+                    </span>
                 </div>
-              </div>
-              
-              <p className="text-sm text-gray-700 mb-3 leading-relaxed">{product.description}</p>
-              
-              {product.specs && (
-                <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded border border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
-                  {product.specs.split('. ').map((spec, idx) => (
-                      spec ? <div key={idx} className="flex items-start gap-1"><span className="w-1.5 h-1.5 rounded-full bg-elcastor-red mt-1.5 flex-shrink-0"></span><span>{spec}</span></div> : null
-                  ))}
-                </div>
-              )}
             </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="md:col-span-2">
+                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Descrição</h4>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                        {product.description}
+                    </p>
+                </div>
+
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        Dados Técnicos
+                    </h4>
+                    {product.specs ? (
+                         <ul className="text-sm text-gray-600 space-y-1">
+                            {product.specs.split('. ').map((spec, i) => (
+                                spec ? <li key={i} className="flex items-start gap-2">
+                                    <span className="w-1 h-1 bg-elcastor-red rounded-full mt-2 flex-shrink-0"></span>
+                                    <span>{spec.replace('.', '')}</span>
+                                </li> : null
+                            ))}
+                         </ul>
+                    ) : (
+                        <span className="text-xs text-gray-400 italic">Consulte o assistente para detalhes.</span>
+                    )}
+                </div>
+            </div>
+
           </div>
         ))}
       </div>
       
       {filteredProducts.length === 0 && (
-        <div className="text-center py-10 text-gray-500 border-2 border-dashed border-gray-200 rounded-lg">
-          Nenhum produto técnico encontrado para essa busca.
+        <div className="text-center py-16 text-gray-500 bg-white rounded-xl border border-dashed border-gray-300">
+            <p className="text-lg font-medium">Nenhum produto encontrado</p>
+            <p className="text-sm">Tente buscar por código ou especificação (ex: "autoclavável")</p>
         </div>
       )}
     </div>

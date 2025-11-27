@@ -24,7 +24,7 @@ export interface Product {
   category: string;
   imageUrl: string;
   brand: Brand;
-  specs?: string; // Informações técnicas extras (ex: Material, Temp Max)
+  specs?: string; // Informações técnicas extras (ex: Material, Temp Max, Resistência Química)
 }
 
 export interface ChatMessage {

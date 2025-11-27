@@ -1,22 +1,9 @@
 import { Brand, Product } from '../types';
 
-export const COLOR_CODES = {
-  description: "Sistema de codificação por área (APPCC) para evitar contaminação cruzada.",
-  codes: [
-    { code: "+W", color: "Branco", area: "Serviços e Hotelaria / Indústria Alimentícia" },
-    { code: "+K", color: "Preto", area: "Indústria em Geral" },
-    { code: "+R", color: "Vermelho", area: "Áreas de Alto Risco / Sanitários" },
-    { code: "+O", color: "Laranja", area: "Áreas de Gordura / Cozinha" },
-    { code: "+Y", color: "Amarelo", area: "Hospitais / Clínicas / Áreas de Isolamento" },
-    { code: "+G", color: "Verde", area: "Áreas de Preparação de Alimentos / Frutas e Verduras" },
-    { code: "+B", color: "Azul", area: "Áreas Gerais / Baixo Risco" },
-    { code: "+P", color: "Roxo", area: "Áreas Específicas / Alérgenos" },
-    { code: "+T", color: "Café", area: "Cafeterias / Áreas de Café" }
-  ]
-};
-
+// Tabela de Classificação de Fibra por Material (PDF Página 1)
 export const MATERIAL_SPECS = {
-  description: "Tabela de resistência e propriedades das fibras e materiais. E=Excelente, B=Boa, S=Suficiente, I=Insuficiente.",
+  description: "Tabela Mestra de Resistência Química e Térmica das Fibras. Use isso para validar se o produto aguenta o ambiente do cliente.",
+  legend: "E=Excelente, B=Boa, S=Suficiente, I=Insuficiente",
   materials: [
     {
       name: "LECHUGUILLA (Fibra Natural)",
@@ -25,7 +12,7 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "B", abrasion: "E", waterAbsorb: "B", elasticMem: "I",
         humidity: "S", acidDiluted: "E", acidConc: "B", alkali: "B",
-        oilVeg: "B", petroleum: "B"
+        alcoholOil: "B", petroleum: "B"
       }
     },
     {
@@ -35,7 +22,7 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "E", abrasion: "E", waterAbsorb: "B", elasticMem: "I",
         humidity: "S", acidDiluted: "E", acidConc: "E", alkali: "E",
-        oilVeg: "E", petroleum: "S"
+        alcoholOil: "E", petroleum: "S"
       }
     },
     {
@@ -45,7 +32,7 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "B", abrasion: "B", waterAbsorb: "I", elasticMem: "E",
         humidity: "E", acidDiluted: "S", acidConc: "S", alkali: "E",
-        oilVeg: "E", petroleum: "E"
+        alcoholOil: "E", petroleum: "E"
       }
     },
     {
@@ -55,9 +42,9 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "E", abrasion: "E", waterAbsorb: "I", elasticMem: "E",
         humidity: "E", acidDiluted: "B", acidConc: "B", alkali: "E",
-        oilVeg: "E", petroleum: "E"
+        alcoholOil: "E", petroleum: "E"
       },
-      note: "Ideal para indústria alimentícia, memória elástica excelente, autoclavável."
+      note: "Material padrão para Indústria Alimentícia (FDA). Autoclavável."
     },
     {
       name: "POLIÉSTER (PET)",
@@ -66,9 +53,9 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "S", abrasion: "I", waterAbsorb: "I", elasticMem: "I",
         humidity: "B", acidDiluted: "I", acidConc: "I", alkali: "I",
-        oilVeg: "S", petroleum: "S"
+        alcoholOil: "S", petroleum: "S"
       },
-      note: "Econômico, feito de garrafas recicladas."
+      note: "Feito de garrafas recicladas. Baixo custo."
     },
     {
       name: "POLIPROPILENO",
@@ -77,7 +64,7 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "B", abrasion: "B", waterAbsorb: "I", elasticMem: "I",
         humidity: "E", acidDiluted: "E", acidConc: "E", alkali: "E",
-        oilVeg: "E", petroleum: "S"
+        alcoholOil: "E", petroleum: "S"
       }
     },
     {
@@ -87,7 +74,18 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "E", abrasion: "B", waterAbsorb: "I", elasticMem: "B",
         humidity: "E", acidDiluted: "E", acidConc: "E", alkali: "B",
-        oilVeg: "E", petroleum: "B"
+        alcoholOil: "E", petroleum: "B"
+      },
+      note: "Comum em escovas automotivas (cerdas macias)."
+    },
+    {
+      name: "TEFLÓN",
+      rigidity: "Alta",
+      tempDistortion: "260°C",
+      resistances: {
+        sun: "E", abrasion: "B", waterAbsorb: "I", elasticMem: "E",
+        humidity: "E", acidDiluted: "E", acidConc: "E", alkali: "E",
+        alcoholOil: "E", petroleum: "E"
       }
     },
     {
@@ -97,155 +95,281 @@ export const MATERIAL_SPECS = {
       resistances: {
         sun: "E", abrasion: "E", waterAbsorb: "I", elasticMem: "E",
         humidity: "E", acidDiluted: "B", acidConc: "B", alkali: "E",
-        oilVeg: "E", petroleum: "E"
+        alcoholOil: "E", petroleum: "E"
       }
     }
   ]
 };
 
+// Código de Cores APPCC (PDF Página 2)
+export const COLOR_CODES = {
+  description: "Sistema de codificação por área (APPCC / HACCP) para evitar contaminação cruzada.",
+  codes: [
+    { code: "+W", color: "Branco", area: "Serviços e Hotelaria / Indústria Alimentícia" },
+    { code: "+K", color: "Preto", area: "Indústria em Geral" },
+    { code: "+R", color: "Vermelho", area: "Áreas de Alto Risco / Sanitários" },
+    { code: "+O", color: "Laranja", area: "Indústria Alimentícia / Áreas de Gordura" },
+    { code: "+Y", color: "Amarelo", area: "Hospitais e Clínicas / Áreas de Isolamento" },
+    { code: "+G", color: "Verde", area: "Áreas de Preparação de Alimentos / Frutas e Verduras" },
+    { code: "+B", color: "Azul", area: "Limpeza Profissional / Áreas Gerais" },
+    { code: "+P", color: "Roxo", area: "Áreas Específicas / Alérgenos" },
+    { code: "+T", color: "Café", area: "Cuidado de Veículos / Cafeterias" }
+  ]
+};
+
+// Lista de Produtos Extraída do OCR
 export const EL_CASTOR_PRODUCTS: Product[] = [
-  // Escovas PBT
+  // Página 3 - Escovas PBT
   {
     id: '4002-4102',
-    name: 'Escova Multiuso (PBT)',
-    description: 'Escova com cerdas de PBT de rigidez média. Disponível em cabo curto (4002) ou longo (4102). Resistente a autoclave, ideal para indústria alimentícia.',
-    category: 'Escovas Alimentícias',
-    imageUrl: 'https://picsum.photos/seed/4002/300/300',
+    name: 'Escova Multiuso (Punho Longo ou Curto)',
+    description: 'Escova popular na indústria alimentícia para esfregar panelas, chaleiras e utensílios. Grampos de aço inox (evita corrosão). Autoclavável. PBT com memória elástica.',
+    category: 'Escovas Manuais PBT',
+    imageUrl: '',
     brand: Brand.EL_CASTOR,
-    specs: "Material: PBT. Temp Máx: 120°C. Comprimento cerda: 4,44cm."
+    specs: "Material: PBT Rigidez Média. Comp. Cerda: 4,44cm. Cabo Longo (4102) para áreas difíceis. Cabo Curto (4002). Resistência Temp: 120°C."
   },
   {
     id: '4012',
-    name: 'Escova Larga Limpeza Detalhada',
-    description: 'Design ergonômico, cerda rígida de PBT. Para peças de máquinas pequenas e difícil acesso.',
-    category: 'Escovas Alimentícias',
-    imageUrl: 'https://picsum.photos/seed/4012/300/300',
+    name: 'Escova Larga para Limpeza Detalhada',
+    description: 'Design ergonômico. Recomendada para peças de máquinas pequenas e difícil acesso.',
+    category: 'Escovas Manuais PBT',
+    imageUrl: '',
     brand: Brand.EL_CASTOR,
-    specs: "Medida: 17,8cm. Material: PBT Rígido."
+    specs: "Medida: 17,8cm x 3,81cm. Material: Polipropileno Sólido + PBT Rígido (2,54cm altura)."
   },
+  // Página 4
   {
     id: '4022',
-    name: 'Escova Estreita Detalhada',
-    description: 'Design estreito e alongado (22,86cm x 2,22cm). Fibra PBT rígida. Para máquinas ou detalhamento.',
-    category: 'Escovas Alimentícias',
-    imageUrl: 'https://picsum.photos/seed/4022/300/300',
-    brand: Brand.EL_CASTOR
+    name: 'Escova Estreita para Limpeza Detalhada',
+    description: 'Design estreito e alongado. Recomendada para máquinas ou detalhamento. Design ergonômico.',
+    category: 'Escovas Manuais PBT',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 22,86cm x 2,22cm. Material: PBT Rígido (1,90cm altura)."
   },
   {
     id: '4302',
-    name: 'Escova Limpeza Tábuas de Corte',
-    description: 'Base ergonômica, cerdas PBT rigidez média. Cerdas inclinadas na ponta.',
-    category: 'Escovas Alimentícias',
-    imageUrl: 'https://picsum.photos/seed/4302/300/300',
-    brand: Brand.EL_CASTOR
+    name: 'Escova P/ Limp. Tábuas Corte',
+    description: 'Projetada para limpar superfícies planas e espaços pequenos. Cerdas inclinadas na ponta para locais difíceis.',
+    category: 'Escovas Manuais PBT',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 15cm. Material: PBT Rigidez Média."
   },
   {
     id: '4312',
-    name: 'Escova Tipo Prancha',
-    description: 'Cabo de plástico maciço tipo ferro. Alça aberta para pendurar na borda de baldes.',
-    category: 'Escovas Alimentícias',
-    imageUrl: 'https://picsum.photos/seed/4312/300/300',
-    brand: Brand.EL_CASTOR
+    name: 'Escova Mult. Tipo Prancha',
+    description: 'Cabo de plástico maciço tipo ferro. Alça aberta para pendurar na borda do balde.',
+    category: 'Escovas Manuais PBT',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 15,5cm. Material: PBT Média Rigidez 1 1/4\"."
   },
-  // Tubos
+  // Página 5
+  {
+    id: '4402',
+    name: 'Escova de Mão Cerdas Médias',
+    description: 'Limpeza de prateleiras, bancadas, balcões e tábuas. Usada em mesas de aço inoxidável.',
+    category: 'Escovas de Mão',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 20,32cm. Material: PBT Rigidez Média (3,18cm)."
+  },
+  {
+    id: '4332',
+    name: 'Escova de Mão Redonda Tipo Estrela',
+    description: 'Formato redondo ideal para limpar recipientes e potes redondos. Permite pressão forte.',
+    category: 'Escovas de Mão',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 10,3cm. Material: PBT Rigidez Média (3,97cm)."
+  },
+  {
+    id: '4601-4602',
+    name: 'Escova de Bancadas',
+    description: 'Duas versões: Baixa rigidez (4601) para farináceos/pós finos. Rigidez média (4602) para lavagem de bancadas.',
+    category: 'Escovas de Bancada',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 33,02cm. Material: PBT."
+  },
+  // Página 6 - Tubos
   {
     id: '5325-5330',
-    name: 'Escova Limpeza Tubos e Válvulas',
-    description: 'Cerdas PBT rigidez média em toda circunferência. Rosca de 3/4". Diâmetros: 6,35cm e 7,62cm.',
+    name: 'Escova Limpeza de Tubos e Válvulas',
+    description: 'Cerdas em toda a circunferência. Base de Polipropileno sólido com rosca de 3/4".',
     category: 'Tubos e Válvulas',
-    imageUrl: 'https://picsum.photos/seed/5325/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Diâmetros: 6,35cm (5325) e 7,62cm (5330). Material: PBT Rigidez Média."
   },
   {
     id: '5401',
     name: 'Escova Curvada Tubulações',
-    description: 'Forma curva para perfil exterior de canos e tubulações aéreas. Acoplável a cabos extensores.',
+    description: 'Forma curva para perfil exterior de tubos aéreos. Acoplável a cabos extensores.',
     category: 'Tubos e Válvulas',
-    imageUrl: 'https://picsum.photos/seed/5401/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: PBT Durável."
   },
-  // Rodos
+  // Página 7 - Tanques
   {
-    id: 'FI25-FI99',
+    id: '4802',
+    name: 'Escova Para Tanques',
+    description: '3 posições para encaixe do cabo, facilitando limpeza em ângulos diversos.',
+    category: 'Tanques',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 25,4cm. Material: PBT Rigidez Média."
+  },
+  {
+    id: '5100-SERIES',
+    name: 'Escova Baqueta',
+    description: 'Limpeza de tubulações com fio de aço inoxidável e alça. Furo para pendurar.',
+    category: 'Tubos e Válvulas',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Diâmetros: 1,9cm a 7,62cm. Material: PBT e Aço Inox."
+  },
+  {
+    id: '4641',
+    name: 'Escova Detalhada Estreita Macia',
+    description: 'Cabo longo e cerda macia. Para locais de difícil acesso que exigem suavidade.',
+    category: 'Detalhe',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: Polipropileno e PBT Macio."
+  },
+  // Página 8 - Pisos
+  {
+    id: '4632',
+    name: 'Escova Limpeza de Botas',
+    description: 'Canais para fluxo de líquidos. Rosca universal para mangueira. Limpeza manual de botas.',
+    category: 'Pisos e Botas',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: PBT Rígido. Conexão: 1/2\" para mangueira."
+  },
+  {
+    id: '4501-4502',
+    name: 'Escova para Piso (Macias ou Médias)',
+    description: 'Base polipropileno estrutural. 4501 (Macias): Superfícies delicadas. 4502 (Média): Sujidade grau maior.',
+    category: 'Pisos',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: PBT. Rosca: 3/4\"."
+  },
+  {
+    id: '4202',
+    name: 'Escova Piso Dois Ângulos',
+    description: 'Dois níveis de cerdas (Hi-Lo). Permite limpar sob móveis e máquinas sem perder ângulo.',
+    category: 'Pisos',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 25,4cm. Material: PBT Rigidez Média."
+  },
+  // Página 9
+  {
+    id: '4510',
+    name: 'Escova Giratória',
+    description: 'Rotativa para limpar rodapés e paredes. Cerdas resistentes a ácidos.',
+    category: 'Pisos e Paredes',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: PBT/Nylon (Resistente Químico)."
+  },
+  {
+    id: '45T2',
+    name: 'Escova Limpeza Rejuntes',
+    description: 'Base triangular. Cerdas em formato de cunha para rejuntes.',
+    category: 'Pisos e Paredes',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: PBT Alta Rigidez."
+  },
+  {
+    id: '4702',
+    name: 'Vassoura Angular Cerdas Médias',
+    description: 'Dura 10x mais que vassoura convencional. Resistência ao calor. Dupla perfuração para ângulo do cabo.',
+    category: 'Vassouras',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Material: PBT Rigidez Média. Rosca: 3/4\"."
+  },
+  // Página 11 - Rodos
+  {
+    id: 'FI25-99',
     name: 'Secador de Bancadas',
-    description: 'Secador de 25cm para pias e bancadas. Materiais aprovados para contato com alimentos.',
-    category: 'Rodos e Secadores',
-    imageUrl: 'https://picsum.photos/seed/FI25/300/300',
-    brand: Brand.EL_CASTOR
+    description: 'Secagem de bancadas e pias. Aprovado para contato com alimentos. Cabo vendido separadamente.',
+    category: 'Rodos',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 25cm. Material: Borracha sanitária."
   },
   {
-    id: 'FI45-FI75',
+    id: 'FI45-75',
     name: 'Rodo Higiênico Pequeno',
-    description: 'Base leve e flexível. Borracha que não propaga microrganismos. Medidas 45cm e 75cm.',
-    category: 'Rodos e Secadores',
-    imageUrl: 'https://picsum.photos/seed/FI45/300/300',
-    brand: Brand.EL_CASTOR
+    description: 'Base leve e flexível. Borracha não propaga microrganismos. Não risca.',
+    category: 'Rodos',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medidas: 45cm e 75cm. Rosca: 3/4\"."
   },
   {
     id: 'UH50',
     name: 'Rodo Ultra Higiênico',
-    description: 'Lâmina e base integrados (peça única), evita acúmulo de sujeira. 50cm.',
-    category: 'Rodos e Secadores',
-    imageUrl: 'https://picsum.photos/seed/UH50/300/300',
-    brand: Brand.EL_CASTOR
+    description: 'Peça única (lâmina e base integrados). Extrema higienização. Não enferruja.',
+    category: 'Rodos',
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 50cm. Material: Borracha/Plástico peça única."
   },
-  // Cabos
+  // Página 12 - Cabos
   {
-    id: '1906-FIBRA',
+    id: '1906-FG',
     name: 'Cabo Fibra de Vidro',
-    description: '1,50m. Não conduz energia, resistente, rosca padrão americano.',
+    description: 'Não conduz energia. Resistente. Rosca padrão americano.',
     category: 'Cabos',
-    imageUrl: 'https://picsum.photos/seed/1906F/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 1,50m. Cores disponíveis."
   },
   {
-    id: '1906-ALUM',
+    id: '1906-AL',
     name: 'Cabo de Alumínio',
-    description: '1,50m. Leve e seguro. Opção com pintura (codificação por cores) ou sem.',
+    description: 'Leve e seguro. Opção com pintura eletrostática (coloridos) ou ponta plástica.',
     category: 'Cabos',
-    imageUrl: 'https://picsum.photos/seed/1906A/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 1,50m. Padrão Americano ou Europeu (requer adaptador)."
   },
-  // Automotivo
+  // Página 17 - Automotivo
   {
     id: '1609',
-    name: 'Ultimate 1609 (Média)',
-    description: 'Escova automotiva cerda natural rigidez média. Bloco com borracha (bumper).',
+    name: 'Escova Ultimate 1609 (Automotiva)',
+    description: 'Cerda natural de rigidez média. Para lavagem de trailers e ônibus. Bloco com proteção.',
     category: 'Automotivo',
-    imageUrl: 'https://picsum.photos/seed/1609/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 23cm. Material: Cerda Natural. Rosca 3/4\"."
   },
   {
     id: '1809',
-    name: 'Ultimate 1809 (Suave)',
-    description: 'Cerda PVC macia (9 pol). Ideal para lava-rápidos exigentes.',
+    name: 'Escova Ultimate 1809 (Suave)',
+    description: 'Cerda PVC macia. Popular em lava-rápido. Alta densidade de fibras.',
     category: 'Automotivo',
-    imageUrl: 'https://picsum.photos/seed/1809/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 23cm. Material: PVC Macio."
   },
   {
     id: '1810',
-    name: 'Escova Bi-Level 1810',
-    description: 'Dois níveis de cerdas para superfícies altas. Disponível macia (1810-B) ou média (1810-P).',
+    name: 'Escova Bi-Level (PVC)',
+    description: 'Dois níveis de cerdas para superfícies altas. Macia (1810-B) ou Média (1810-P).',
     category: 'Automotivo',
-    imageUrl: 'https://picsum.photos/seed/1810/300/300',
-    brand: Brand.EL_CASTOR
-  },
-  // Vassouras e Pás
-  {
-    id: '4188',
-    name: 'Escova Spectrum Omni Sweep',
-    description: 'Cerdas Polipropileno corte angular. Varrição rápida. Base rosca 3/4.',
-    category: 'Vassouras',
-    imageUrl: 'https://picsum.photos/seed/4188/300/300',
-    brand: Brand.EL_CASTOR
-  },
-  {
-    id: '9801-9802',
-    name: 'Pá Sanitária',
-    description: 'Pá de plástico peça única, não oxida. Pequena ou Grande.',
-    category: 'Pás e Espátulas',
-    imageUrl: 'https://picsum.photos/seed/9801/300/300',
-    brand: Brand.EL_CASTOR
+    imageUrl: '',
+    brand: Brand.EL_CASTOR,
+    specs: "Medida: 25,4cm. Material: PVC."
   }
 ];

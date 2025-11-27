@@ -7,8 +7,6 @@ export const registerUser = (user: User, password: string): boolean => {
   // We simulate saving to local storage for the demo.
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-    // We strictly wouldn't store passwords in plaintext/localstorage in prod, 
-    // but this simulates the successful registration flow.
     localStorage.setItem('cleanmaster_auth_token', 'mock-token-' + Date.now());
     return true;
   } catch (error) {
@@ -29,7 +27,6 @@ export const loginUser = (email: string, password: string): User | null => {
         company: 'Empresa Demo Ltda'
       };
       
-      // Salva sessão simulada
       localStorage.setItem('cleanmaster_last_login', new Date().toISOString());
       localStorage.setItem(STORAGE_KEY, JSON.stringify(demoUser));
       localStorage.setItem('cleanmaster_auth_token', 'demo-token-' + Date.now());
@@ -38,9 +35,6 @@ export const loginUser = (email: string, password: string): User | null => {
     }
 
     const stored = localStorage.setItem('cleanmaster_last_login', new Date().toISOString());
-    // For demo purposes, we accept any login if a user exists in storage 
-    // or just return a mock user if the credentials "match" our simulation.
-    // Let's check if we have a registered user.
     const userStr = localStorage.getItem(STORAGE_KEY);
     if (userStr) {
       const user = JSON.parse(userStr) as User;
