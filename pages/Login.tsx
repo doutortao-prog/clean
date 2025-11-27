@@ -24,7 +24,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
       if (user) {
         onSuccess();
       } else {
-        setError('Credenciais inválidas. Verifique e-mail e senha.');
+        setError('Credenciais inválidas. Verifique usuário e senha.');
       }
       setLoading(false);
     }, 800);
@@ -50,11 +50,12 @@ export const Login: React.FC<LoginProps> = ({ onSuccess, onSwitchToRegister }) =
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <Input
-              label="E-mail"
-              type="email"
+              label="E-mail ou Usuário"
+              type="text"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Ex: user ou nome@empresa.com"
             />
 
             <Input

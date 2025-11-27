@@ -5,66 +5,67 @@ const MOCK_UNGER_PRODUCTS: Product[] = [
   {
     id: 'u1',
     name: 'ErgoTec® Ninja Rodo',
-    description: 'Rodo profissional com canal de alumínio aeronáutico T6. O mais avançado para vidros.',
+    description: 'Rodo profissional com canal de alumínio aeronáutico T6. O mais avançado para vidros. Mecanismo de troca rápida de borracha e canal.',
     category: 'Vidros',
-    imageUrl: 'https://picsum.photos/300/300?random=1',
-    brand: Brand.UNGER
+    imageUrl: '', // Imagem removida
+    brand: Brand.UNGER,
+    specs: 'Material: Alumínio T6. Borracha: Soft ou Hard. Ângulo: 30° ou 40°.'
   },
   {
     id: 'u2',
     name: 'HydroPower® Ultra',
-    description: 'Sistema de limpeza com água pura para vidros externos e fachadas.',
+    description: 'Sistema de limpeza com água pura para vidros externos e fachadas. Utiliza resina de troca iônica para filtrar minerais.',
     category: 'Água Pura',
-    imageUrl: 'https://picsum.photos/300/300?random=2',
-    brand: Brand.UNGER
+    imageUrl: '',
+    brand: Brand.UNGER,
+    specs: 'Fluxo: Até 120L/h. Filtros: Ultra Resin Packs. Altura: Até 20m com cabos de carbono.'
   },
   {
     id: 'u3',
     name: 'Stingray® Kit',
-    description: 'Sistema de limpeza interna de vidros para alturas de até 4m.',
+    description: 'Sistema de limpeza interna de vidros para alturas de até 4m. Aplica solução de limpeza diretamente na superfície.',
     category: 'Interno',
-    imageUrl: 'https://picsum.photos/300/300?random=3',
-    brand: Brand.UNGER
+    imageUrl: '',
+    brand: Brand.UNGER,
+    specs: 'Alcance: 4m. Pad: Microfibra Triangula. Bateria: 2x AA.'
   },
   {
     id: 'u4',
     name: 'NiftyNabber® Pro',
-    description: 'Pinça pegadora robusta para coleta de detritos e lixo.',
+    description: 'Pinça pegadora robusta para coleta de detritos e lixo. Estrutura metálica durável.',
     category: 'Manutenção',
-    imageUrl: 'https://picsum.photos/300/300?random=4',
-    brand: Brand.UNGER
+    imageUrl: '',
+    brand: Brand.UNGER,
+    specs: 'Comprimentos: 90cm, 130cm, 250cm. Garra: Aço emborrachado.'
   }
 ];
 
 export const UngerCatalog: React.FC = () => {
   return (
     <div className="space-y-6">
-      <div className="bg-unger-green text-white p-8 rounded-xl shadow-md">
-        <h2 className="text-3xl font-bold mb-2">Catálogo Unger</h2>
-        <p className="opacity-90">Qualidade alemã em ferramentas de limpeza profissional.</p>
+      <div className="bg-unger-green text-white p-6 rounded-lg shadow-sm">
+        <h2 className="text-2xl font-bold mb-1">Catálogo Unger</h2>
+        <p className="text-sm opacity-90">Lista técnica de ferramentas.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="space-y-4">
         {MOCK_UNGER_PRODUCTS.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col">
-            <div className="h-48 overflow-hidden rounded-t-lg bg-gray-100 relative group">
-              <img 
-                src={product.imageUrl} 
-                alt={product.name} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute top-2 right-2 bg-unger-green text-white text-xs px-2 py-1 rounded-full font-bold">
-                Unger
+          <div key={product.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:border-unger-green transition-colors shadow-sm">
+            <div className="flex justify-between items-start mb-2">
+              <div>
+                <span className="text-xs font-bold text-unger-dark uppercase bg-green-50 px-2 py-1 rounded">{product.category}</span>
+                <h3 className="text-xl font-bold text-gray-900 mt-2">{product.name}</h3>
               </div>
+              <span className="text-xs font-mono text-gray-400">ID: {product.id}</span>
             </div>
-            <div className="p-4 flex flex-col flex-1">
-              <div className="text-xs font-semibold text-unger-dark mb-1 uppercase tracking-wide">{product.category}</div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">{product.name}</h3>
-              <p className="text-sm text-gray-600 mb-4 flex-1">{product.description}</p>
-              <button className="w-full mt-auto py-2 px-4 border border-unger-green text-unger-green rounded hover:bg-unger-green hover:text-white transition-colors text-sm font-medium">
-                Ver Detalhes
-              </button>
-            </div>
+            
+            <p className="text-gray-600 mb-4">{product.description}</p>
+            
+            {product.specs && (
+              <div className="mt-2 p-3 bg-gray-50 rounded border-l-4 border-unger-green text-sm text-gray-700">
+                <strong>Especificações:</strong> {product.specs}
+              </div>
+            )}
           </div>
         ))}
       </div>

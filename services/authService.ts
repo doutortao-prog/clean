@@ -19,6 +19,24 @@ export const registerUser = (user: User, password: string): boolean => {
 
 export const loginUser = (email: string, password: string): User | null => {
   try {
+    // HARDCODED DEMO USER
+    // Permite login imediato com user/user123 conforme solicitado
+    if (email === 'user' && password === 'user123') {
+      const demoUser: User = {
+        name: 'Usuário Demo',
+        phone: '11999999999',
+        email: 'user@demo.com',
+        company: 'Empresa Demo Ltda'
+      };
+      
+      // Salva sessão simulada
+      localStorage.setItem('cleanmaster_last_login', new Date().toISOString());
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(demoUser));
+      localStorage.setItem('cleanmaster_auth_token', 'demo-token-' + Date.now());
+      
+      return demoUser;
+    }
+
     const stored = localStorage.setItem('cleanmaster_last_login', new Date().toISOString());
     // For demo purposes, we accept any login if a user exists in storage 
     // or just return a mock user if the credentials "match" our simulation.
@@ -26,6 +44,7 @@ export const loginUser = (email: string, password: string): User | null => {
     const userStr = localStorage.getItem(STORAGE_KEY);
     if (userStr) {
       const user = JSON.parse(userStr) as User;
+      // Simple match for demo
       if (user.email === email) {
         localStorage.setItem('cleanmaster_auth_token', 'mock-token-' + Date.now());
         return user;

@@ -81,26 +81,26 @@ const App: React.FC = () => {
                   onClick={() => setCurrentView('dashboard')}
                   className={`${currentView === 'dashboard' ? 'border-brand-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium h-16`}
                 >
-                  Dashboard
+                  Assistente IA
                 </button>
                 <button
                   onClick={() => setCurrentView('unger')}
                   className={`${currentView === 'unger' ? 'border-unger-green text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium h-16`}
                 >
-                  Unger
+                  Catálogo Unger
                 </button>
                 <button
                   onClick={() => setCurrentView('elcastor')}
                   className={`${currentView === 'elcastor' ? 'border-elcastor-red text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium h-16`}
                 >
-                  El Castor
+                  Catálogo El Castor
                 </button>
               </div>
             </div>
             <div className="flex items-center">
               <div className="flex items-center">
                 <span className="text-sm text-gray-700 mr-4 hidden md:block">
-                  Olá, <strong>{user.name}</strong> ({user.company})
+                  <strong>{user.name}</strong>
                 </span>
                 <button
                   onClick={handleLogout}
@@ -115,70 +115,81 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+        
+        {/* Render Dashboard View (Mainly Chat) */}
         {currentView === 'dashboard' && (
-          <div className="space-y-8">
-            <div className="text-center py-10">
-              <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-                Catálogos Inteligentes
-              </h1>
-              <p className="mt-5 max-w-xl mx-auto text-xl text-gray-500">
-                Selecione uma marca para explorar os produtos e utilizar nosso assistente AI.
+          <div className="flex flex-col items-center justify-start space-y-6">
+            <div className="text-center w-full max-w-2xl">
+              <h1 className="text-3xl font-bold text-gray-900">Consultoria Técnica Inteligente</h1>
+              <p className="mt-2 text-gray-500">
+                Descreva sua necessidade de limpeza e eu indicarei a melhor ferramenta dos nossos catálogos.
               </p>
             </div>
+            
+            {/* Embedded Chat Container */}
+            <div className="w-full max-w-4xl">
+              {/* O ChatAssistant aqui será renderizado via portal ou apenas condicionalmente CSS para manter estado? 
+                  Para simplicidade e manter estado, vamos renderizá-lo sempre fora, mas usar classes CSS.
+                  No entanto, se renderizarmos aqui dentro, ele desmonta ao mudar de view.
+                  
+                  SOLUÇÃO: Renderizar o ChatAssistant fora do switch de views e usar CSS para posicioná-lo.
+              */}
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Card Unger */}
-              <div 
+            {/* Quick Links */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-4xl mt-8">
+               <button 
                 onClick={() => setCurrentView('unger')}
-                className="group relative bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform hover:-translate-y-1 transition-all duration-300 border-t-4 border-unger-green"
-              >
-                <div className="h-40 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                  <span className="text-4xl font-bold text-unger-dark">UNGER</span>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-unger-green transition-colors">
-                    Ferramentas de Vidro
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Acesso completo à linha ErgoTec, HydroPower e sistemas telescópicos de alta performance.
-                  </p>
-                  <span className="text-unger-green font-semibold flex items-center">
-                    Acessar Catálogo &rarr;
-                  </span>
-                </div>
-              </div>
-
-              {/* Card El Castor */}
-              <div 
+                className="p-4 border border-gray-200 rounded-lg bg-white hover:border-unger-green hover:shadow-md transition-all flex items-center justify-between group"
+               >
+                 <span className="font-semibold text-gray-700 group-hover:text-unger-green">Ver Lista Unger</span>
+                 <svg className="w-5 h-5 text-gray-400 group-hover:text-unger-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+               </button>
+               <button 
                 onClick={() => setCurrentView('elcastor')}
-                className="group relative bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transform hover:-translate-y-1 transition-all duration-300 border-t-4 border-elcastor-red"
-              >
-                <div className="h-40 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                  <span className="text-4xl font-bold text-elcastor-dark">EL CASTOR</span>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-elcastor-red transition-colors">
-                    Limpeza Geral
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Linha completa de Mops, carrinhos funcionais e equipamentos para limpeza úmida.
-                  </p>
-                  <span className="text-elcastor-red font-semibold flex items-center">
-                    Acessar Catálogo &rarr;
-                  </span>
-                </div>
-              </div>
+                className="p-4 border border-gray-200 rounded-lg bg-white hover:border-elcastor-red hover:shadow-md transition-all flex items-center justify-between group"
+               >
+                 <span className="font-semibold text-gray-700 group-hover:text-elcastor-red">Ver Lista El Castor</span>
+                 <svg className="w-5 h-5 text-gray-400 group-hover:text-elcastor-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+               </button>
             </div>
           </div>
         )}
 
-        {currentView === 'unger' && <UngerCatalog />}
-        {currentView === 'elcastor' && <ElCastorCatalog />}
+        {/* Catalog Views */}
+        <div className={currentView === 'dashboard' ? 'hidden' : 'block'}>
+            {currentView === 'unger' && <UngerCatalog />}
+            {currentView === 'elcastor' && <ElCastorCatalog />}
+        </div>
+
       </main>
 
-      {/* AI Assistant - Always available but context aware */}
-      <ChatAssistant activeBrand={getActiveBrand()} />
+      {/* 
+        The ChatAssistant is rendered here permanently to preserve conversation state.
+        We pass 'embedded' mode if dashboard is active, otherwise 'floating'.
+        Inside ChatAssistant, we handle the CSS classes to make it look right in both contexts.
+        Wait, if it's outside main, how do we put it "inside" the dashboard container centered?
+        
+        Simple approach: 
+        We use fixed positioning for floating.
+        We use a portal or just conditional styling that makes it look like it's in the document flow for embedded?
+        
+        Actually, for this request, simplicity is key. 
+        If 'embedded', we render it here inside a specific wrapper div that centers it on screen (fixed overlay or absolute).
+        OR, we just make the 'embedded' mode a Full Screen layout minus header.
+        
+        Let's try this: 
+        If dashboard: Render in a container that sits in the middle of the screen (using absolute/fixed positioning that looks embedded).
+        If catalog: Render bottom right.
+      */}
+      <div className={currentView === 'dashboard' ? 'flex justify-center w-full max-w-5xl mx-auto px-4 pb-8' : ''}>
+         <ChatAssistant 
+            activeBrand={getActiveBrand()} 
+            mode={currentView === 'dashboard' ? 'embedded' : 'floating'}
+         />
+      </div>
+
     </div>
   );
 };

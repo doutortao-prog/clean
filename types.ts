@@ -1,3 +1,4 @@
+
 export interface User {
   name: string;
   phone: string;
@@ -23,6 +24,7 @@ export interface Product {
   category: string;
   imageUrl: string;
   brand: Brand;
+  specs?: string; // Informações técnicas extras (ex: Material, Temp Max)
 }
 
 export interface ChatMessage {
